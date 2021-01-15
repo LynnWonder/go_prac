@@ -14,6 +14,17 @@ type Personn struct {
 	Age    uint8
 }
 // 讲指针的时候会再进行讲解
+
+
+// 一个方法的接收者类型是其所属类型的指针类型而不是该类型本身，该方法则为一个指针方法。反之则为值方法
+// 那么这里为什么会用指针方法而不是值方法呢
+// 因为如果是用 Person 那么此时代表的是 p 值的拷贝而不是 p 的值
+// 在调用 grow 方法时 go 会将 p 的值复制一份并将其作为此次调用的当前值，因此 Grow 方法中的 person.Age++ 语句的执行会使这个副本的 Age 字段的值变为 34，
+// 而 p 的 Age 字段的值却依然是 33。这就是问题所在
+
+// 而如果使用 *Person 那么此时 person代表的是p的值的指针的副本。
+// 指针的副本仍会指向p的值。另外，之所以选择表达式person.Age成立，是因为如果Go语言发现person是指针并且指向的那个值有Age字段，那么就会把该表达式视为(*person).Age。
+// 其实，这时的person.Age正是(*person).Age
 func (person *Personn) Grow() {
 	person.Age++
 }
