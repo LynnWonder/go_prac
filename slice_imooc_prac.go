@@ -5,6 +5,16 @@ func main() {
 	var numbers4 = [...]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 	// 获取的是索引 [4,6) 的数据，同时最大索引是 8
 	slice5 := numbers4[4:6:8]
+	for i:=range slice5{
+		slice5[i]+=5
+	}
+	for i,v:=range slice5{
+		fmt.Printf("键：%v：值：%v\n", i,v)
+	}
+	// key: 由于 slice 是引用类型因此导致了改变了原先的数组
+	for i,v:=range numbers4{
+		fmt.Printf("改变了键：%v：值：%v\n", i,v)
+	}
 	length := 2
 	capacity := 4
 	fmt.Printf("%v, %v, %v\n", slice5,length == len(slice5), capacity == cap(slice5))
