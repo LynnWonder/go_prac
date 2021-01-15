@@ -6,6 +6,7 @@ golang 练习使用
 ## 基本数据类型和引用类型
 
 ### 引用类型
+注：引用类型零值即为 nil
 1. slice
 2. map
 
@@ -79,3 +80,4 @@ type slice struct {
 6. map 在并发会 panic 原因？
 7. switch 不需要进行 break
 8. 在 for 循环中写函数也会面临闭包问题，当然也有相应的解决方案
+9. 结构体，c++ 中的结构体
