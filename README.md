@@ -76,7 +76,7 @@ type slice struct {
 2. functions 学习，多个返回值学习
 3. 声明变量的方式 尤其是冒号
 4. 指针 
-5. slice map struct 协程
+5. ~~slice map struct~~ 协程
 6. map 在并发会 panic 原因？
 7. switch 不需要进行 break
 8. 在 for 循环中写函数也会面临闭包问题，当然也有相应的解决方案
