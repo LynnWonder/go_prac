@@ -15,6 +15,15 @@ import (
 	"time"
 )
 
+/**
+	getReadSizeFile func() (io.Reader,error)
+	getDecodeFile func() (*os.File,error),
+	to: 输出目录
+	Quality: 图片质量
+	base int,
+	format: 后缀格式
+ */
+
 func imageCompress(
 	getReadSizeFile func() (io.Reader,error),
 	getDecodeFile func() (*os.File,error),
@@ -53,13 +62,13 @@ func imageCompress(
 		}
 		temp, err = getReadSizeFile()
 		if err != nil {
-			fmt.Println("os.Open(temp)");
+			fmt.Println("os.Open(temp)")
 			log.Fatal(err)
 			return false
 		}
-		config,err = jpeg.DecodeConfig(temp);
+		config,err = jpeg.DecodeConfig(temp)
 		if err != nil {
-			fmt.Println("jpeg.DecodeConfig(temp)");
+			fmt.Println("jpeg.DecodeConfig(temp)")
 			return false
 		}
 	}else if format=="png" {
@@ -96,6 +105,7 @@ func imageCompress(
 		return false
 	}
 	if typeImage==0 {
+		// todo 如果不进行编码可以直接生成一个图片然后进行写入
 		err = png.Encode(file_out, canvas)
 		if err!=nil {
 			fmt.Println("压缩图片失败");
@@ -166,8 +176,11 @@ func getFilelist(path string) {
 	}
 }
 
-/** 是否是图片 */
+/**
+格式化输出图片路径
+*/
 func isPictureFormat(path string) (string,string,string) {
+	// go 字符串也可以分割
 	temp := strings.Split(path,".")
 	if len(temp) <=1 {
 		return "","",""
@@ -176,12 +189,13 @@ func isPictureFormat(path string) (string,string,string) {
 	mapRule["jpg"]  = 1
 	mapRule["png"]  = 1
 	mapRule["jpeg"] = 1
-	// fmt.Println(temp[1]+"---")
-	/** 添加其他格式 */
+	// 如果满足格式
 	if mapRule[temp[1]] == 1  {
 		println(temp[1])
+		// 返回 完整路径，后缀，文件名
 		return path,temp[1],temp[0]
 	}else{
+		// 如果不满足格式或者说是批量进行修改
 		return "","",""
 	}
 }
@@ -195,20 +209,23 @@ func execute()  {
 	data, _, _ := reader.ReadLine()
 	/** 分割 */
 	strPice := strings.Split(string(data)," ") /** 空格 */
-	if len(strPice) < 3 {
-		fmt.Printf("输入有误，参数数量不足,请重新输入或退出程序：")
-		execute()
-		return
-	}
+	//if len(strPice) < 3 {
+	//	fmt.Printf("输入有误，参数数量不足,请重新输入或退出程序：")
+	//	execute()
+	//	return
+	//}
 
+	// 路径
 	inputArgs.LocalPath = strPice[0]
+	// 质量
 	inputArgs.Quality,_ = strconv.Atoi(strPice[1])
+	// 尺寸
 	inputArgs.Width,_   = strconv.Atoi(strPice[2])
 
+	// 路径，后缀格式，文件名
 	pathTemp,format,top := isPictureFormat(inputArgs.LocalPath)
 	if pathTemp == "" {
-		/** 目录 */
-		/** 如果输入目录，那么是批量 */
+		// 批量文件处理
 		fmt.Println("开始批量压缩...")
 		rs := []rune(inputArgs.LocalPath)
 		end := len(rs)
@@ -219,10 +236,10 @@ func execute()  {
 			end := len(rs)
 			substr := string(rs[0:end-1])
 			endIndex := strings.LastIndex(substr,"/")
-			inputArgs.OutputPath = string(rs[0:endIndex])+"/LghImageCompress/";
+			inputArgs.OutputPath = string(rs[0:endIndex])+"/LghImageCompress/"
 		}else {
 			endIndex := strings.LastIndex(inputArgs.LocalPath,"/")
-			inputArgs.OutputPath = string(rs[0:endIndex])+"/LghImageCompress/";
+			inputArgs.OutputPath = string(rs[0:endIndex])+"/LghImageCompress/"
 		}
 		getFilelist(inputArgs.LocalPath)
 		fmt.Println("图片保存在文件夹 "+inputArgs.OutputPath)
@@ -230,6 +247,7 @@ func execute()  {
 		/** 单个 */
 		/** 如果输入文件，那么是单个，允许自定义路径 */
 		fmt.Println("开始单张压缩...") //C:\Users\lzq\Desktop\Apk.jpg 75 200
+		// 输出文件地址为
 		inputArgs.OutputPath = top+"_compress."+format
 		if !imageCompress(
 			func() (io.Reader,error){
@@ -286,9 +304,11 @@ type InputArgs struct {
 	Format     string  /** 格式 */
 }
 
+// 声明变量 var name type
 var inputArgs InputArgs
+
 func main() {
-	showTips()
+	//showTips()
 	execute()
 	time.Sleep(5 * time.Minute) /** 如果不是自己点击退出，延时5分钟 */
 }
