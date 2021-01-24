@@ -16,6 +16,10 @@ import (
 )
 
 /**
+ 目前看做成具体 robot 主要涉及细节是： 如何读取文件，生成文件后如何给 robot
+ */
+
+/**
 	getReadSizeFile func() (io.Reader,error)
 	getDecodeFile func() (*os.File,error),
 	to: 输出目录
@@ -30,7 +34,8 @@ func imageCompress(
 	to string,
 	Quality,
 	base int,
-	format string) bool{
+	format string,
+	outputType string) bool{
 	/** 读取文件 */
 	file_origin, err := getDecodeFile()
 	defer file_origin.Close()
@@ -95,9 +100,14 @@ func imageCompress(
 	width  := uint(base) /** 基准 */
 	height := uint(base*config.Height/config.Width)
 
+	var canvas image.Image
 	fmt.Printf("width: %v, height: %v", width, height)
+	if outputType=="thumbnail" {
+		canvas = resize.Thumbnail(width, height, origin, resize.Lanczos3)
+	}else if outputType=="fixed" {
+		canvas = resize.Resize(240, 240, origin, resize.Lanczos3)
+	}
 	//canvas := resize.Thumbnail(width, height, origin, resize.Lanczos3)
-	canvas := resize.Resize(240, 240, origin, resize.Lanczos3)
 	file_out, err := os.Create(to)
 	defer file_out.Close()
 	if err != nil {
@@ -163,7 +173,8 @@ func getFilelist(path string) {
 				outputPath,
 				inputArgs.Quality,
 				inputArgs.Width,
-				format) {
+				format,
+				"fixed") {
 				fmt.Println("生成缩略图失败")
 			}else{
 				fmt.Println("生成缩略图成功 "+outputPath)
@@ -259,7 +270,8 @@ func execute()  {
 			inputArgs.OutputPath,
 			inputArgs.Quality,
 			inputArgs.Width,
-			format) {
+			format,
+			"thumbnail") {
 			fmt.Println("生成缩略图失败")
 		}else{
 			fmt.Println("生成缩略图成功 "+inputArgs.OutputPath)
@@ -308,7 +320,7 @@ type InputArgs struct {
 var inputArgs InputArgs
 
 func main() {
-	//showTips()
+	showTips()
 	execute()
 	time.Sleep(5 * time.Minute) /** 如果不是自己点击退出，延时5分钟 */
 }
