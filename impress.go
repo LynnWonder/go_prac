@@ -1,12 +1,14 @@
 package main
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"github.com/nfnt/resize"
 	"image"
 	"image/jpeg"
 	"image/png"
 	"io"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -16,24 +18,24 @@ import (
 	"time"
 )
 
-func Get()(io.Reader)  { //生成client 参数为默认
+func Get() io.Reader  { //生成client 参数为默认
 	client := &http.Client{}
 	//生成要访问的url
-	url := "https://open.feishu.cn/open-apis/image/v4/get?image_key=img_e2186396-bc78-4d4f-ac24-371783fc14cg"
+	url := "https://open.feishu.cn/open-apis/image/v4/get?image_key=img_379f66f7-8169-478b-b381-00bf6a45502g"
 	//提交请求
 	request, err := http.NewRequest("GET", url, nil)
 
 	//增加header选项
-	request.Header.Add("Authorization", "Bearer t-c62dff385d9e12dcf7b0a9078cf0f1f760da656f")
+	request.Header.Add("Authorization", "Bearer t-a215f7bfea3b8af18df9d9e33fdb1711b7bbee74")
 
 	if err != nil {
 		panic(err)
 	}
 	//处理返回结果
 	response, _ := client.Do(request)
+	img,err := ioutil.ReadAll(response.Body)
 	defer response.Body.Close()
-	//return ioutil.ReadAll(response.Body)
-	return response.Body
+	return bytes.NewReader(img)
 }
 
 /**
@@ -60,9 +62,9 @@ func imageCompress(
 	/** 读取文件 */
 	//file_origin, err := getDecodeFile()
 	file, err := getDecodeFile()
-	fmt.Printf(" %v", file)
+	fmt.Printf("====>file %v\n", file)
 	file_origin := Get()
-	fmt.Printf("====> %v", file_origin)
+	//fmt.Printf("====>file_origin %v\n", file_origin)
 	//defer file_origin.Close()
 	if err != nil {
 		fmt.Println("os.Open(file)错误");
