@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"github.com/disintegration/imaging"
 	"image"
@@ -14,6 +15,15 @@ import (
 	"strings"
 	"unsafe"
 )
+
+type Res struct {
+	Code string
+	Msg string
+	Data Data
+}
+type Data struct {
+	Image_key string
+}
 
 func HttpGet(url string,token string) io.Reader  { //生成client 参数为默认
 	client := &http.Client{}
@@ -30,27 +40,11 @@ func HttpGet(url string,token string) io.Reader  { //生成client 参数为默�
 	return bytes.NewReader(img)
 }
 
-func HttpPost(params map[string]string, paramName, path string, img io.Reader)  error {
-	uri :="https://open.feishu.cn/open-apis/image/v4/put"
-	body := &bytes.Buffer{}
-	writer := multipart.NewWriter(body)
-	part, err := writer.CreateFormFile(paramName, path)
-	if err != nil {
-		return  err
-	}
-	_, err = io.Copy(part, img)
-
-	for key, val := range params {
-		_ = writer.WriteField(key, val)
-	}
-	writer.WriteField("image_type", "message")
-	err = writer.Close()
-	if err != nil {
-		return err
-	}
+func HttpPost (uri string, body io.Reader, token string, contentType string) Data{
+	var res Res
 	request, err := http.NewRequest("POST", uri, body)
-	request.Header.Set("Content-Type", writer.FormDataContentType())
-	request.Header.Set("Authorization", "Bearer t-86e9e0e349751b66fd8ce6a75f61eeac2bbcfebd")
+	request.Header.Set("Content-Type", contentType)
+	request.Header.Set("Authorization", "Bearer t-1a871f6970b73ac44411eb9c24b62b489ec9ce02")
 
 
 	client := http.Client{}
@@ -61,19 +55,48 @@ func HttpPost(params map[string]string, paramName, path string, img io.Reader)  
 	respBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println(err.Error())
-		return err
 	}
 	str := (*string)(unsafe.Pointer(&respBytes))
 	fmt.Println(*str)
 
-	return  err
+	// json 解析
+	_= json.Unmarshal(respBytes, &res)
+	fmt.Println(res.Data.Image_key)
+	return  res.Data
 }
+
+func uploadImg(params map[string]string, paramName string, img io.Reader)  string {
+	var data Data
+	path :="/tmp"
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+	part, err := writer.CreateFormFile(paramName, path)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	_, err = io.Copy(part, img)
+
+	for key, val := range params {
+		_ = writer.WriteField(key, val)
+	}
+	writer.WriteField("image_type", "message")
+	err = writer.Close()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	data = HttpPost("https://open.feishu.cn/open-apis/image/v4/put",body,"Bearer t-1a871f6970b73ac44411eb9c24b62b489ec9ce02",writer.FormDataContentType())
+	return data.Image_key
+}
+//func getToken()  {
+//	var data Data
+//	data = HttpPost("https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal/",)
+//}
 func ImageCompress(
 	base int,
 	format string,
 	outputType string) io.Reader{
 	var origin image.Image
-	file_origin := HttpGet("https://open.feishu.cn/open-apis/image/v4/get?image_key=img_379f66f7-8169-478b-b381-00bf6a45502g", "Bearer t-86e9e0e349751b66fd8ce6a75f61eeac2bbcfebd")
+	file_origin := HttpGet("https://open.feishu.cn/open-apis/image/v4/get?image_key=img_379f66f7-8169-478b-b381-00bf6a45502g", "Bearer t-1a871f6970b73ac44411eb9c24b62b489ec9ce02")
 	format = strings.ToLower(format)
 	/** jpg 格式 */
 	if format=="jpg" || format =="jpeg" {
@@ -81,21 +104,17 @@ func ImageCompress(
 	}else if format=="png" {
 		origin, _ = png.Decode(file_origin)
 	}
-	/** 做等比缩放 */
-	width  := uint(base)
-	// 实际宽高
-	height := uint(base*240/240)
+	///** 做等比缩放 */
+	//width  := uint(base)
+	//// 实际宽高
+	//height := uint(base*240/240)
 
 	var canvas image.Image
-	fmt.Printf("width: %v, height: %v", width, height)
 	if outputType=="thumbnail" {
 		canvas = imaging.Resize(origin, 128, 128, imaging.Lanczos)
-		//canvas = resize.Thumbnail(width, height, origin, resize.Lanczos3)
 	}else if outputType=="fixed" {
 		canvas = imaging.Thumbnail(origin, 240, 240, imaging.Lanczos)
-		//canvas = resize.Resize(240, 240, origin, resize.Lanczos3)
 	}
-	fmt.Printf("====>canvas %v\n",canvas)
 	//return canvas
 	buf := new(bytes.Buffer)
 	// 将 image.Image 转化为 []byte
@@ -107,7 +126,6 @@ func main()  {
 		240,
 		"png",
 		"thumbnail")
-	fmt.Printf("====img %v", img)
 	data := make(map[string]string)
-	HttpPost(data,"image","/Users/bytedance/Desktop/111.png", img)
+	uploadImg(data,"image", img)
 }
