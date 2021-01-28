@@ -3,26 +3,21 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"github.com/nfnt/resize"
+	"github.com/disintegration/imaging"
 	"image"
 	"image/jpeg"
 	"image/png"
 	"io"
 	"io/ioutil"
-	"log"
+	"mime/multipart"
 	"net/http"
 	"strings"
+	"unsafe"
 )
 
-func Get(url string,token string) io.Reader  { //生成client 参数为默认
+func HttpGet(url string,token string) io.Reader  { //生成client 参数为默认
 	client := &http.Client{}
-	//生成要访问的url
-	//url := "https://open.feishu.cn/open-apis/image/v4/get?image_key=img_379f66f7-8169-478b-b381-00bf6a45502g"
-	//提交请求
 	request, err := http.NewRequest("GET", url, nil)
-
-	//增加header选项
-	//request.Header.Add("Authorization", "Bearer t-a215f7bfea3b8af18df9d9e33fdb1711b7bbee74")
 	request.Header.Add("Authorization", token)
 
 	if err != nil {
@@ -34,35 +29,51 @@ func Get(url string,token string) io.Reader  { //生成client 参数为默认
 	defer response.Body.Close()
 	return bytes.NewReader(img)
 }
-/**
-格式化输出图片路径
-*/
-func isPictureFormat(path string) (string) {
-	// go 字符串也可以分割
-	temp := strings.Split(path,".")
-	if len(temp) <=1 {
-		return ""
+
+func HttpPost(params map[string]string, paramName, path string, img io.Reader)  error {
+	uri :="https://open.feishu.cn/open-apis/image/v4/put"
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+	part, err := writer.CreateFormFile(paramName, path)
+	if err != nil {
+		return  err
 	}
-	mapRule := make(map[string]int64)
-	mapRule["jpg"]  = 1
-	mapRule["png"]  = 1
-	mapRule["jpeg"] = 1
-	// 如果满足格式
-	if mapRule[temp[1]] == 1  {
-		println(temp[1])
-		// 返回后缀
-		return temp[1]
-	}else{
-		// 如果不满足格式或者说是批量进行修改
-		return ""
+	_, err = io.Copy(part, img)
+
+	for key, val := range params {
+		_ = writer.WriteField(key, val)
 	}
+	writer.WriteField("image_type", "message")
+	err = writer.Close()
+	if err != nil {
+		return err
+	}
+	request, err := http.NewRequest("POST", uri, body)
+	request.Header.Set("Content-Type", writer.FormDataContentType())
+	request.Header.Set("Authorization", "Bearer t-86e9e0e349751b66fd8ce6a75f61eeac2bbcfebd")
+
+
+	client := http.Client{}
+	resp, err := client.Do(request)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	respBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println(err.Error())
+		return err
+	}
+	str := (*string)(unsafe.Pointer(&respBytes))
+	fmt.Println(*str)
+
+	return  err
 }
-func imageCompress(
+func ImageCompress(
 	base int,
 	format string,
-	outputType string) image.Image{
+	outputType string) io.Reader{
 	var origin image.Image
-	file_origin := Get("https://open.feishu.cn/open-apis/image/v4/get?image_key=img_379f66f7-8169-478b-b381-00bf6a45502g", "Bearer t-ba5f1063b84ba08842018382bf1901a841942ee0")
+	file_origin := HttpGet("https://open.feishu.cn/open-apis/image/v4/get?image_key=img_379f66f7-8169-478b-b381-00bf6a45502g", "Bearer t-86e9e0e349751b66fd8ce6a75f61eeac2bbcfebd")
 	format = strings.ToLower(format)
 	/** jpg 格式 */
 	if format=="jpg" || format =="jpeg" {
@@ -78,17 +89,25 @@ func imageCompress(
 	var canvas image.Image
 	fmt.Printf("width: %v, height: %v", width, height)
 	if outputType=="thumbnail" {
-		canvas = resize.Thumbnail(width, height, origin, resize.Lanczos3)
+		canvas = imaging.Resize(origin, 128, 128, imaging.Lanczos)
+		//canvas = resize.Thumbnail(width, height, origin, resize.Lanczos3)
 	}else if outputType=="fixed" {
-		canvas = resize.Resize(240, 240, origin, resize.Lanczos3)
+		canvas = imaging.Thumbnail(origin, 240, 240, imaging.Lanczos)
+		//canvas = resize.Resize(240, 240, origin, resize.Lanczos3)
 	}
-	fmt.Printf("====>canvas %v",canvas)
-	return canvas
+	fmt.Printf("====>canvas %v\n",canvas)
+	//return canvas
+	buf := new(bytes.Buffer)
+	// 将 image.Image 转化为 []byte
+	_ = png.Encode(buf, canvas)
+	return buf
 }
 func main()  {
-	img :=imageCompress(
+	img :=ImageCompress(
 		240,
 		"png",
 		"thumbnail")
-
+	fmt.Printf("====img %v", img)
+	data := make(map[string]string)
+	HttpPost(data,"image","/Users/bytedance/Desktop/111.png", img)
 }
