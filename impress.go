@@ -26,7 +26,7 @@ func Get() io.Reader  { //生成client 参数为默认
 	request, err := http.NewRequest("GET", url, nil)
 
 	//增加header选项
-	request.Header.Add("Authorization", "Bearer t-a215f7bfea3b8af18df9d9e33fdb1711b7bbee74")
+	request.Header.Add("Authorization", "Bearer t-86e9e0e349751b66fd8ce6a75f61eeac2bbcfebd")
 
 	if err != nil {
 		panic(err)
@@ -134,6 +134,7 @@ func imageCompress(
 	}else if outputType=="fixed" {
 		canvas = resize.Resize(240, 240, origin, resize.Lanczos3)
 	}
+	fmt.Printf("====> %v", canvas)
 	//canvas := resize.Thumbnail(width, height, origin, resize.Lanczos3)
 	file_out, err := os.Create(to)
 	defer file_out.Close()
