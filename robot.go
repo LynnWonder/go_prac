@@ -114,6 +114,18 @@ func postImgMsg(image_key string, token string)  {
 	body :=[]byte(body_str)
 	HttpPost("https://open.feishu.cn/open-apis/message/v4/send/", bytes.NewReader(body),token,"application/json")
 }
+func postTextMsg(text string, token string)  {
+	body_str :=`{
+	"email":"liulin.wonder@bytedance.com",
+	"msg_type": "text",
+	"content":{
+		"text": "我没太听懂你的意思"
+	}
+	}`
+	// 转换为 byte 类型 再通过 bytes.NewReader(body) 转换为 io.reader 类型
+	body :=[]byte(body_str)
+	HttpPost("https://open.feishu.cn/open-apis/message/v4/send/", bytes.NewReader(body),token,"application/json")
+}
 func ImageCompress(
 	base int,
 	format string,
@@ -155,4 +167,5 @@ func main()  {
 	//img_key :=uploadImg(data,"image", img)
 	img_key :=uploadImg("image", img, token)
 	postImgMsg(img_key, token)
+	postTextMsg("sdd", token)
 }
