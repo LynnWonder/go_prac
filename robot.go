@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/disintegration/imaging"
 	"image"
+	"image/color"
 	"io"
 	"io/ioutil"
 	"mime/multipart"
@@ -152,7 +153,10 @@ func postInteractMsg(chat_id string, token string) {
                             "tag": "plain_text",
                             "content": "指定宽高图片"
                         },
-                        "type": "primary"
+                        "type": "primary",
+						"value":{
+							"key":"fixed"
+						}
                     },
                     {
                         "tag": "button",
@@ -160,7 +164,10 @@ func postInteractMsg(chat_id string, token string) {
                             "tag": "plain_text",
                             "content": "缩略图"
                         },
-                        "type": "primary"
+                        "type": "primary",
+						"value":{
+							"key":"thumbnail"
+						}
                     }
         ]
     }
@@ -177,7 +184,7 @@ func ImageCompress(
 	outputType string,
 	token string) io.Reader {
 	var origin image.Image
-	file_origin := HttpGet("https://open.feishu.cn/open-apis/image/v4/get?image_key=img_75cd176b-cff6-498f-86d5-f8ba29ba967g", token)
+	file_origin := HttpGet("https://open.feishu.cn/open-apis/image/v4/get?image_key=img_d326e1da-e12a-4203-acfc-e023f9b35f2g", token)
 	format = strings.ToLower(format)
 	/** jpg 格式 */
 	//if format=="jpg" || format =="jpeg" {
@@ -193,16 +200,29 @@ func ImageCompress(
 	//height := uint(base*240/240)
 
 	var canvas image.Image
+	//var col color.Color
 	if outputType == "fixed" {
 		canvas = imaging.Resize(origin, 240, 240, imaging.Lanczos)
 	} else if outputType == "thumbnail" {
-		//canvas = imaging.Thumbnail(origin, 240, 120, imaging.Lanczos)
+		canvas = imaging.Thumbnail(origin, 240, 120, imaging.Lanczos)
+	}else if outputType == "blur" {
 		// opted 图片高斯模糊
-		//canvas = imaging.Blur(origin, 15)
+		canvas = imaging.Blur(origin, 15)
+	}else if outputType == "sharpen" {
 		// opted 图片锐化
-		//canvas = imaging.Sharpen(origin, 15)
+		canvas = imaging.Sharpen(origin, 0.8)
+	}else if outputType == "brightness" {
 		// opted 图片亮度调节
 		canvas = imaging.AdjustBrightness(origin, 20)
+	}else if outputType == "gray"{
+		// opted 图片灰度（一键遗照）
+		canvas = imaging.Grayscale(origin)
+	}else if outputType == "rotate" {
+		// opted 图片逆时针旋转，背景部分默认设置为白色
+		canvas = imaging.Rotate(origin, 90, color.RGBA{255, 255, 255, 255})
+	}else if outputType == "invert" {
+		// opted 图片反色
+		canvas = imaging.Invert(origin)
 	}
 	//return canvas
 	buf := new(bytes.Buffer)
@@ -214,14 +234,14 @@ func ImageCompress(
 }
 func main() {
 	token := getToken()
-	//img := ImageCompress(
-	//	240,
-	//	"png",
-	//	"thumbnail", token)
+	img := ImageCompress(
+		240,
+		"png",
+		"invert", token)
 	////data := make(map[string]string)
 	////img_key :=uploadImg(data,"image", img)
-	//img_key := uploadImg("image", img, token)
-	//postImgMsg(img_key, token)
+	img_key := uploadImg("image", img, token)
+	postImgMsg(img_key, token)
 	//postTextMsg("sdd", token)
-	postInteractMsg("6921306919621722115", token)
+	//postInteractMsg("6921306919621722115", token)
 }
