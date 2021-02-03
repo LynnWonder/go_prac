@@ -7,12 +7,22 @@ import (
 	"github.com/disintegration/imaging"
 	"image"
 	"image/color"
+	"image/draw"
 	"io"
 	"io/ioutil"
+	"math"
+	"math/rand"
 	"mime/multipart"
 	"net/http"
 	"strings"
+	"time"
 	"unsafe"
+
+	"golang.org/x/image/font/gofont/goitalic"
+	"golang.org/x/image/font/opentype"
+	"gonum.org/v1/plot/font"
+	"gonum.org/v1/plot/vg"
+	"gonum.org/v1/plot/vg/vgimg"
 )
 
 type Res struct {
@@ -232,14 +242,108 @@ func ImageCompress(
 	_ = imaging.Encode(buf, canvas, 2)
 	return buf
 }
+
+
+func init() {
+	rand.Seed(time.Now().UnixNano())
+}
+
+// WaterMark for adding a watermark on the image
+func waterMark(image_key string, markText string, markSize float64, token string) (io.Reader, error) {
+	file_origin := HttpGet("https://open.feishu.cn/open-apis/image/v4/get?image_key="+image_key, token)
+	img, _ :=imaging.Decode(file_origin)
+	// image's length to canvas's length
+	bounds := img.Bounds()
+	w := vg.Length(bounds.Max.X) * vg.Inch / vgimg.DefaultDPI
+	h := vg.Length(bounds.Max.Y) * vg.Inch / vgimg.DefaultDPI
+	diagonal := vg.Length(math.Sqrt(float64(w*w + h*h)))
+
+	// create a canvas, which width and height are diagonal
+	c := vgimg.New(diagonal, diagonal)
+
+	// draw image on the center of canvas
+	rect := vg.Rectangle{}
+	rect.Min.X = diagonal/2 - w/2
+	rect.Min.Y = diagonal/2 - h/2
+	rect.Max.X = diagonal/2 + w/2
+	rect.Max.Y = diagonal/2 + h/2
+	c.DrawImage(rect, img)
+
+	// make a fontStyle, which width is vg.Inch * 0.7
+	fontStyle, _ := vg.MakeFont("Courier", vg.Inch*0.7)
+
+	// repeat the markText
+	markTextWidth := fontStyle.Width(markText)
+	unitText := markText
+	// 尽可能拉长距离让水印填充整张图片
+	for markTextWidth <= w*5 {
+		markText += "      " + unitText
+		markTextWidth = fontStyle.Width(markText)
+	}
+
+	// set the color of markText
+	c.SetColor(color.RGBA{0, 0, 0, 40})
+
+	// set a random angle between 0 and π/2
+	//θ := math.Pi * rand.Float64() / 2
+	// 默认设置为 70 度
+	c.Rotate(70)
+
+	// set the lineHeight and add the markText
+	lineHeight := fontStyle.Extents().Height * 1
+	for offset := -2 * diagonal; offset < 2*diagonal; offset += lineHeight {
+		var after font.Face
+		f, _ := opentype.Parse(goitalic.TTF)
+		after.Face = f
+		var len font.Length
+		len = font.Length(markSize)
+		after.Font = font.Font{
+			Typeface: "",
+			Variant:  "Math",
+			Style:    0,
+			Weight:   20,
+			Size:    len,
+		}
+		// 填充文字
+		c.FillString(after, vg.Point{X: w/3, Y: offset}, markText)
+	}
+
+	// canvas writeto jpeg
+	// canvas.img is private
+	// so use a buffer to transfer
+	jc := vgimg.PngCanvas{Canvas: c}
+	buff := new(bytes.Buffer)
+	jc.WriteTo(buff)
+	img, _, err := image.Decode(buff)
+	if err != nil {
+		return nil, err
+	}
+
+	// get the center point of the image
+	ctp := int(diagonal * vgimg.DefaultDPI / vg.Inch / 2)
+
+	// cutout the marked image
+	size := bounds.Size()
+	bounds = image.Rect(ctp-size.X/2, ctp-size.Y/2, ctp+size.X/2, ctp+size.Y/2)
+	rv := image.NewRGBA(bounds)
+	draw.Draw(rv, bounds, img, bounds.Min, draw.Src)
+	//return rv, nil
+	buf := new(bytes.Buffer)
+	// 将 image.Image 转化为 []byte
+	_ = imaging.Encode(buf, rv, 2)
+	return buf, nil
+}
+
 func main() {
 	token := getToken()
-	img := ImageCompress(
-		240,
-		"png",
-		"invert", token)
-	////data := make(map[string]string)
-	////img_key :=uploadImg(data,"image", img)
+	//file_origin := HttpGet("https://open.feishu.cn/open-apis/image/v4/get?image_key=img_94d78666-0ba3-4db0-bda9-7e408b7b67fg", token)
+	//file_img, _ :=imaging.Decode(file_origin)
+	img, _ := waterMark("img_0db4b3fd-5cb5-4467-826e-197eef09183g", "THIS IS A TEST", 20,token)
+	//img := ImageCompress(
+	//	240,
+	//	"png",
+	//	"invert", token)
+	//data := make(map[string]string)
 	img_key := uploadImg("image", img, token)
 	postImgMsg(img_key, token)
 	//postTextMsg("sdd", token)
