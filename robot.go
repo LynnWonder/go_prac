@@ -194,7 +194,7 @@ func ImageCompress(
 	outputType string,
 	token string) io.Reader {
 	var origin image.Image
-	file_origin := HttpGet("https://open.feishu.cn/open-apis/image/v4/get?image_key=img_d326e1da-e12a-4203-acfc-e023f9b35f2g", token)
+	file_origin := HttpGet("https://open.feishu.cn/open-apis/image/v4/get?image_key=img_71620e2d-b1ee-4422-9a3a-dbc586de06ag", token)
 	format = strings.ToLower(format)
 	/** jpg 格式 */
 	//if format=="jpg" || format =="jpeg" {
@@ -214,7 +214,18 @@ func ImageCompress(
 	if outputType == "fixed" {
 		canvas = imaging.Resize(origin, 240, 240, imaging.Lanczos)
 	} else if outputType == "thumbnail" {
-		canvas = imaging.Thumbnail(origin, 240, 120, imaging.Lanczos)
+		fmt.Print("\n")
+		//var thumbnail_width int
+		//var thumbnail_height int
+		origin_width :=origin.Bounds().Max.X
+		origin_height :=origin.Bounds().Max.Y
+		fmt.Printf("=====>origin %v %v %v\n", origin_width, origin_height, float64(origin_width)/float64(origin_height))
+		fmt.Printf("=====>width %v\n", int(float64(origin_width)/float64(origin_height)*200))
+		//if(options.Width){
+		//	thumbnail_width = options.Width
+		//	thumbnail_height = origin_height/origin_width*thumbnail_width
+		//}
+		canvas = imaging.Resize(origin, int(float64(origin_width)/float64(origin_height)*3000), 3000, imaging.Lanczos)
 	}else if outputType == "blur" {
 		// opted 图片高斯模糊
 		canvas = imaging.Blur(origin, 15)
@@ -239,7 +250,7 @@ func ImageCompress(
 	// 将 image.Image 转化为 []byte
 	//_ = png.Encode(buf, canvas)
 	// opted 修改成支持多种类型的图片转换
-	_ = imaging.Encode(buf, canvas, 2)
+	_ = imaging.Encode(buf, canvas, 1)
 	return buf
 }
 
@@ -338,11 +349,11 @@ func main() {
 	token := getToken()
 	//file_origin := HttpGet("https://open.feishu.cn/open-apis/image/v4/get?image_key=img_94d78666-0ba3-4db0-bda9-7e408b7b67fg", token)
 	//file_img, _ :=imaging.Decode(file_origin)
-	img, _ := waterMark("img_0db4b3fd-5cb5-4467-826e-197eef09183g", "THIS IS A TEST", 20,token)
-	//img := ImageCompress(
-	//	240,
-	//	"png",
-	//	"invert", token)
+	//img, _ := waterMark("img_0db4b3fd-5cb5-4467-826e-197eef09183g", "THIS IS A TEST", 20,token)
+	img := ImageCompress(
+		240,
+		"png",
+		"thumbnail", token)
 	//data := make(map[string]string)
 	img_key := uploadImg("image", img, token)
 	postImgMsg(img_key, token)
