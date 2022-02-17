@@ -102,6 +102,19 @@ interface{}作为Go的重要特性之一，它代表的是一个类似``*void``�
 
 3. golang 中可以使用分号吗
 
+4. golang 怎么获取数据类型
+
+```go
+// vars 为变量
+reflect.TypeOf(vars).Kind()
+```
+5. unit8, int32 是什么类型，能不能举个例子？
+
+6. rune 数组是什么？
+
+7. go 如何做类型转换，比如 string()，是不是强类型语言不需要进行类型转换？
+
+
 ## shell
 
 1. `mv`
