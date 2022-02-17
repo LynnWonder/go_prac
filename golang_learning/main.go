@@ -2,7 +2,10 @@
 package main
 
 // fmt 是 go 的一个标准库/包，用来处理标准输入输出
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+)
 
 // main 函数是整个程序的入口，main 函数所在的包名必须为 main
 func main() {
@@ -10,10 +13,19 @@ func main() {
 	var b float32 = 11.1
 	var c byte = 'c'
 	str1 := "golang"
-	str2 := "go123"
+	str2 := "go语言"
+	runeArr := []rune(str2)
 	// 直接输出
 	fmt.Println("hello world", a, b, c)
 	// 格式化输出
 	fmt.Printf("%s %s\n", str1, str2)
+	// 获取数据类型
+	fmt.Println(reflect.TypeOf(str2).Kind())
+	// 可以发现字符串是以 byte 数组的形式存储的，类型是 unit8，占一个 byte,不转换的话打印的就是编码值
+	fmt.Println(str2[0],reflect.TypeOf(str2[0]).Kind(), string(str2[0]))
+	fmt.Println(str2[2],reflect.TypeOf(str2[2]).Kind(), string(str2[2]))
+	// 通过上面的测试发现对于汉字不会通过 string(vars) 转换
+	// 转换成 []rune 类型后，字符串中的每个字符，无论占多少个字节都用 int32 来表示
+	fmt.Println(runeArr[2],reflect.TypeOf(runeArr[2]).Kind(), string(runeArr[2]))
 }
 
