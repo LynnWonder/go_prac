@@ -20,6 +20,8 @@ func main() {
 	realNum :=1
 	realAdd(&realNum)
 	fmt.Println("realNum=====>", realNum)
+	res :=realAdd0(0)
+	fmt.Println("realNum0=====>", res)
 }
 
 // 一般来说，指针通常在函数传递参数，或者给某个类型定义新的方法时使用。
@@ -32,4 +34,9 @@ func add(param int) {
 
 func realAdd(param *int) {
 	*param +=1
+}
+
+func realAdd0 (param int) int {
+	param++
+	return param
 }
