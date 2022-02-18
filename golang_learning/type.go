@@ -11,12 +11,15 @@ import (
 func  main()  {
 	// ① golang 中空接口可以存储任意类型的值，因此可以使用空接口来进行数据转换
 	var a interface{} = 257
+	var b interface{} = "zz"
 
 	s,ok := a.(int64)
+	z := b.(string)
 	// ② unsafe 强制类型转换，暂时不学习
 	//var f float64
 	//bits = *(*uint64)(unsafe.Pointer(&f))
 	fmt.Println(s, ok)
+	fmt.Println(z)
 	fmt.Println(s, reflect.TypeOf(s))
 	justifyType(nil)
 	justifyType("I'm Garfield")
