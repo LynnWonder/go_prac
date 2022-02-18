@@ -15,9 +15,12 @@ func main() {
 	fmt.Println("m1", m2)
 	fmt.Println("m2", m2)
 
-
-	// map 是否有 JSON.stringify 这样的函数
-
+	// tip interface{} 空数组可以表示任何类型
+	m3 := make(map[string]interface{})
+	m3["a"] = "a"
+	m3["b"] = 10
+	m3["c"] = []int{1,2,3}
+	fmt.Println("任意类型====>", m3)
 
 	// 操作 map 字典
 	delete(m2, "Sam")

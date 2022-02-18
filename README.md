@@ -130,7 +130,46 @@ golang 中 rune 其实 int32 的别名，用于区分字符值和整数值。
 
 8. ~~如何遍历一个数组~~
 
-9. 函数如何写 return，尤其在指针那一节想直接 return 改变后的值发现不允许
+9. ~~函数如何写 return，尤其在指针那一节想直接 return 改变后的值发现不允许~~
+
+10. const 在 golang 中指的是什么
+
+11. ~~执行 fallthrough 之后 不再进行匹配直接一条路走到 default？~~
+
+12. 如何执行全等操作， golang 数据类型总结
+
+https://juejin.cn/post/6844903923166232589
+
+13. ~~什么是协程， defer 函数是立即执行函数吗~~
+
+Go 协程（Goroutine）是与其他函数同时运行的函数。 可以认为 Go 协程是轻量级的线程，由 Go 运行时来管理。 
+在函数调用前加上 go 关键字，这次调用就会在一个新的 goroutine 中并发执行。
+当被调用的函数返回时，这个 goroutine 也自动结束。
+
+defer 确实是一个闭包，它在声明时不会立刻去执行，而是在函数 return 之后去执行的
+
+14. golang 中是否有同步函数和异步函数的概念呢
+
+15. ~~golang 如何拼接字符串~~
+
+- 运算符 + 
+- fmt.Sprintf()  关于它：内部使用 []byte 实现，不像直接运算符 + 这种会产生很多临时的字符串，但是内部的逻辑比较复杂，有很多额外的判断，还用到了 interface，所以性能也不是很好
+- strings.Join 关于它：在已有一个数组的情况下，这种效率会很高，但是本来没有，去构造这个数据的代价也不小
+- buffer.WriteString()
+
+```go
+var buffer bytes.Buffer
+buffer.WriteString("hello")
+buffer.WriteString(",world")
+s := buffer.String()
+```
+16. golang 如何将整型转化为字符串类型
+
+使用 `strconv`
+
+17. golang 项目中一般使用什么 lint 工具，golang 有开发环境包、生产环境包之分吗
+
+18. golang 中的 go xx 是什么意思
 
 
 ## shell
