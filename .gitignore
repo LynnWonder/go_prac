@@ -1,1 +1,10 @@
 .idea/
+
+# reference https://github.com/gin-gonic/gin/blob/master/.gitignore
+vendor/*
+!vendor/vendor.json
+coverage.out
+count.out
+test
+profile.out
+tmp.out

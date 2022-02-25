@@ -1,4 +1,2 @@
-# go_prac
+# gin_practices
 
-
-golang 练习使用
