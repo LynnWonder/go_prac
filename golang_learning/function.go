@@ -4,10 +4,15 @@ import "fmt"
 
 func main()  {
 	a :=add0(1,2)
+	// tip 想要对返回多个值的函数返回值进行赋值必须先定义
+	name1:=0
+	name2:=0
+	name1, name2 = test(1,2)
 	fmt.Println("======>add0 计算结果",a)
 
 	fmt.Println("======>错误处理", get(20))
 	fmt.Println("======>不抛出错误", get(2))
+	fmt.Println("======>检测函数返回多个值", name1, name2)
 }
 
 // 使用关键字 func，参数可以有多个，返回值也支持有多个。
@@ -30,3 +35,10 @@ func get(index int) (res int) {
 	arr := [3]int{2, 3, 4}
 	return arr[index]
 }
+
+// 关于 golang 返回多个值
+
+func test(a int, b int) (int, int){
+	return a,b
+}
+
