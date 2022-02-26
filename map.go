@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main()  {
-	// map[K]T K 必须是可以比较的类型因此不能是切片字典或者函数
+	// tip map[K]T , K 必须是可以比较的类型因此不能是切片字典或者函数
 	mm :=map[string]string{"a":"a", "b":"b", "c":"c"}
 	b :=mm["b"]
 	fmt.Println("b===>", b)
