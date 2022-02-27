@@ -4,6 +4,12 @@
 golang 练习使用
 
 > 2022.02.17 开始系统的学习 golang，💪💪💪
+> 
+> 学习资料：
+> 
+> [Go 语言简明教程](https://geektutu.com/post/quick-golang.html#1-Go-%E5%AE%89%E8%A3%85)
+> 
+> [Go 入门指南](https://learnku.com/docs/the-way-to-go/105-anonymous-field-and-embedded-structure/3643#687598)
 ## 值类型和引用类型
 references:
 
@@ -210,6 +216,9 @@ s := buffer.String()
 
 18. golang 中的 go xx 是什么意思
 
+~~19. range 方法可以遍历一个数组？~~
+
+range 类似迭代器，可以遍历数组、字符串、map 等，对象不同，返回的结果也不同
 
 ## shell
 
@@ -220,3 +229,9 @@ s := buffer.String()
 ```shell
 mv hello.go main.go
 ```
+
+
+mark
+
+10.16.3 学习进度
+https://learnku.com/docs/the-way-to-go/105-anonymous-field-and-embedded-structure/3643#989205

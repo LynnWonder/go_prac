@@ -36,6 +36,8 @@ func main() {
 	res :=stu.hello("jack")
 	fmt.Println("res is====>", res)
 
+	// tip
+	//  相当于实例化 Student 后，强制转换成接口类型 Person
 	var stu0 Person=&Student{
 		name: "jerry",
 	}
@@ -46,7 +48,10 @@ func main() {
 	fmt.Println("======>接口转换为实例", pp, reflect.TypeOf(pp))
 }
 
-// 接口 interfaces 定义了一组方法的集合，接口不能被实例化，一个类型可以实现多个接口
+// tip
+//  接口 interfaces 定义了一组方法的集合，
+//  接口不能被实例化，一个类型可以实现多个接口
+// 	golang 中，并不需要显式的声明实现了哪个接口，只需要直接实现该接口对应的方法即可
 
 type Person interface {
 	getName() string
