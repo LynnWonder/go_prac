@@ -1,5 +1,7 @@
 package main
+
 import (
+	"flag"
 	"fmt"
 	"reflect"
 )
@@ -24,4 +26,7 @@ func main() {
 	fmt.Println(reflect.TypeOf(runeArr[2]).Kind()) // int32
 	fmt.Println(runeArr[2], string(runeArr[2]))    // 35821 语
 	fmt.Println("len(runeArr)：", len(runeArr))    // len(runeArr)： 4
+	mode := flag.String("mode", "http", "请填写服务的运行模式http|cron")
+	// 可以得出结论是解指针后如果不输入默认就是 http
+	fmt.Println("=====>", *mode)
 }
