@@ -4,7 +4,8 @@ import "fmt"
 
 func main() {
 	str :="golang"
-	// tip 指针类型定义时使用 *，使用 & 获取该类型的地址：一句话来解释的话就是假如有变量 aa, 则 &aa 它的类型就是 *string
+	// tip 关于指针中的 * 和 &
+	// 	指针类型定义时使用 *，使用 & 获取该类型的地址：一句话来解释的话就是假如有变量 aa, 则 &aa 它的类型就是 *string
 	// p 是一个指向 str 的指针
 	var p *string = &str
 	fmt.Println(p)

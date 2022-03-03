@@ -26,4 +26,12 @@ func main()  {
 	delete (mm, "d")
 	// 有则删除，无则不
 	fmt.Printf("after deleting 'd''===> %v\n", mm)
+	// tip
+	//  因为 interface{} 即空接口，它可以存储任意类型，并且任意类型都实现了空接口
+	// 	所以我们这样来定义这个字典
+	a :=map[string]interface{}{
+		"name":"lynn",
+		"age":100,
+	}
+	fmt.Println("a 的值就是===>", a)
 }
