@@ -17,3 +17,9 @@
     │       └── index.go
     └── router.go # 路由初始化
 ```
+
+## 一些问题
+
+- gin 是在 net/http 基础上进行了一些封装？'
+
+- handler chain 的概念
