@@ -14,6 +14,11 @@ golang 练习使用
 references:
 
 [GO 值类型与引用类型](https://www.helloworld.net/p/0226733349)
+
+[Go 基础](https://www.topgoer.com/) 🌟🌟🌟 
+
+
+> golang 是静态语言，Python、JavaScript 则是动态语言
 ### 值类型
 特点：（简化版）变量直接存储值，内存通常在栈中分配
 
@@ -32,7 +37,7 @@ references:
 
 其他：
 
-引用类型必须申请内存才可以使用，`make()` 来给引用类型申请内存空间
+引用类型必须申请内存才可以使用，`make()` 来给引用类型申请内存空间, `make()`
 
 注：引用类型零值即为 nil
 

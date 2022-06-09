@@ -5,6 +5,24 @@ import (
 	"reflect"
 )
 
+
+func printArr(arr *[5]int) {
+	arr[0] = 10
+	for i, v := range arr {
+		fmt.Println(i, v)
+	}
+}
+
+// 求两个元素之和
+func sumArr(a [5]int) int {
+	var sum int = 0
+	for i := range a {
+		sum += a[i]
+	}
+	return sum
+}
+
+
 func main()  {
 	// tip 数组定义时都是有长度定义的，比如 [len]int{} 或者 [...]int{}
 	// 	  实际开发中用到数组的概率不大
@@ -12,9 +30,16 @@ func main()  {
 	// 声明时初始化
 	var arr = [5]int{1,2,3,4,5}
 	arr1 :=[2]int{1,2}
-	fmt.Println(reflect.TypeOf(arr))
+	fmt.Println("===arr 的类型===",reflect.TypeOf(arr))
 	fmt.Println(arr1)
 
+
+	var arr2 [5]int
+	printArr(&arr2)
+	fmt.Println(arr2)
+	arr3 := [...]int{2, 4, 6, 8, 10}
+	printArr(&arr3)
+	fmt.Println(arr3)
 
 	// 修改数组
 	for i :=0; i < len(arr); i++ {
@@ -56,17 +81,19 @@ func main()  {
 
 	// 数组遍历
 	// 使用 for range 迭代的性能更好一些，这种迭代保证不会出现数据越界的情形，因此每轮迭代也就省去了对下标是否越界的判断
-	//for i :=range arr {
-	//	// 整型输出
-	//	fmt.Printf("arr[%d]: %d\n", i, arr[i])
-	//}
-	//
-	//for i,v :=range arr {
-	//	fmt.Printf("arr[%d]: %d\n", i, v)
-	//}
-	//
-	//for i:=0;i<len(arr);i++ {
-	//	fmt.Printf("arr[%d]: %d\n", i, arr[i])
-	//}
+	// 打印键，即下标
+	for i :=range arr {
+		// 整型输出
+		fmt.Printf("arr[%d]: %d\n", i, arr[i])
+	}
+	// 打印键值
+	for i,v :=range arr {
+		fmt.Printf("arr[%d]: %d\n", i, v)
+	}
+
+	for i:=0;i<len(arr);i++ {
+		fmt.Printf("arr[%d]: %d\n", i, arr[i])
+	}
+	fmt.Printf("sum=%d\n", sumArr(arr))
 
 }

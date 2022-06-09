@@ -9,6 +9,7 @@ import (
  * http://www.randyfield.cn/post/2021-05-26-go-type-conversion/
  */
 func  main()  {
+	// Go 语言只有强制类型转换，语法是 T(表达式) 仅支持两个类型可以相互转换的时候使用，没有隐式类型转换
 	// tip ① golang 中空接口可以存储任意类型的值，因此可以使用空接口来进行数据转换
 	var a interface{} = 257
 	var b interface{} = "zz"
