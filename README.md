@@ -18,6 +18,12 @@
     └── router.go # 路由初始化
 ```
 
+## 项目启动
+
+```golang
+go run main.go
+```
+
 ## 一些问题
 
 - gin 是在 net/http 基础上进行了一些封装？'
