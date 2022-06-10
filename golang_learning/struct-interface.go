@@ -29,12 +29,29 @@ func (stu *Student) getName() string {
 }
 func main() {
 	// 实例化
+	// 基本实例化
+	var stuu Student
+	stuu.name="shilihua0"
+	stuu.age=20
+	fmt.Printf("实例化后的值 p1=%#v\n", stuu)
 	// 没有被显性赋值的变量会被赋予默认值
 	stu :=&Student{
 		name: "Tom",
 	}
 	res :=stu.hello("jack")
 	fmt.Println("res is====>", res)
+
+	// new 关键字对结构体实例化，得到的将是结构体指针
+	var stup = new(Student)
+	stup.name = "pointer"
+	stup.age = 20
+	fmt.Println("===*stup==>", *stup)
+
+	// 使用 & 对结构体进行取地址操作相当于对该结构体类型进行了一次 new 实例化
+	stupp := &Student{"lynn", 20}
+	fmt.Println("===*stupp==>", *stupp)
+
+
 
 	// tip
 	//  相当于实例化 Student 后，强制转换成接口类型 Person
@@ -43,9 +60,13 @@ func main() {
 	}
 	fmt.Println("======>实现接口", stu0.getName())
 
+
 	// tip 接口也可以类型转换为实例
 	pp :=stu0.(*Student)
 	fmt.Println("======>接口转换为实例", pp, reflect.TypeOf(pp))
+
+
+	// 学习结构体一定要学习方法（类似于类的方法）详情参看 method.go
 }
 
 // tip
