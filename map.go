@@ -75,6 +75,19 @@ func main()  {
 		fmt.Printf("init index: %v value: %v\n", key, val)
 	}
 
+	actions := make(map[string]string,3)
+	actions["1"] = "test1"
+	actions["2"] = "test2"
+	actions["3"] = "test3"
+
+	// if 语句可以持初始化语句
+	// tip 感觉这里可以用来判断某个元素是否存在
+	if action, ok := actions["4"]; ok {
+		fmt.Println("===action===>", action, ok)
+	} else {
+		fmt.Println("===error action===>", action, ok)
+	}
+
 	// tip
 	//  因为 interface{} 即空接口，它可以存储任意类型，并且任意类型都实现了空接口
 	// 	所以我们这样来定义这个字典

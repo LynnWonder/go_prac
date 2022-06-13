@@ -47,9 +47,11 @@ func main() {
 	stup.age = 20
 	fmt.Println("===*stup==>", *stup)
 
-	// 使用 & 对结构体进行取地址操作相当于对该结构体类型进行了一次 new 实例化
+	// tip 使用 & 对结构体进行取地址操作相当于对该结构体类型进行了一次 new 实例化
 	stupp := &Student{"lynn", 20}
+	stupp1 := &Student{name:"lynn", age:20}
 	fmt.Println("===*stupp==>", *stupp)
+	fmt.Println("===*stupp1==>", *stupp1)
 
 
 

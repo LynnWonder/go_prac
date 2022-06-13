@@ -30,8 +30,23 @@ var result = func(part1 string, part2 string) string {
 	return part1 + part2
 }("1", "2")
 
+/**
+TIP 在默认情况下，Go 语言使用的是值传递，即在调用过程中不会影响到实际参数。
+ 注意1：无论是值传递，还是引用传递，传递给函数的都是变量的副本，不过，值传递是值的拷贝。引用传递是地址的拷贝，一般来说，地址拷贝更为高效。
+ 而值拷贝取决于拷贝的对象大小，对象越大，则性能越低。
+ 注意2：map、slice、chan、指针、interface默认以引用的方式传递。
+ */
 
+// TIP 不定长参数通过在类型前加 ... 标识
+func summary (n ...int) int{
+	res :=0
+	for _, val :=range n {
+		res = res + val
+	}
+	return res
+}
 func main () {
 	fmt.Print(result)
+	fmt.Println("===计算和==>", summary(1,2,3), summary(0,1))
 }
 
