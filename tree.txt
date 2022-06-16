@@ -1,0 +1,41 @@
+.
+├── README.md
+├── biz
+│   ├── common
+│   │   └── global.go
+│   ├── config
+│   │   ├── config.go
+│   │   └── logger.go
+│   ├── dal
+│   │   ├── gorm.go
+│   │   └── person
+│   │       └── person.go
+│   ├── handler
+│   │   ├── error.go
+│   │   ├── handler.go
+│   │   └── person
+│   │       └── person.go
+│   ├── model
+│   │   └── person.go
+│   └── service
+│       └── person
+│           ├── errors.go
+│           └── person.go
+├── conf
+│   └── default.yaml
+├── go.mod
+├── go.sum
+├── img.png
+├── logs
+│   └── gin-prac.log
+├── main.go
+├── router
+│   ├── api
+│   │   ├── index.go
+│   │   └── userRouter
+│   │       ├── auth.go
+│   │       └── index.go
+│   └── router.go
+└── router.go
+
+15 directories, 23 files

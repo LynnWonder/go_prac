@@ -1,18 +1,17 @@
-module gin_prac
+module github.com/LynnWonder/gin_prac
 
 go 1.16
 
 require (
-	github.com/gin-gonic/gin v1.7.7 // indirect
-	github.com/go-playground/validator/v10 v10.10.0 // indirect
-	github.com/golang/protobuf v1.5.2 // indirect
-	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/mattn/go-isatty v0.0.14 // indirect
-	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
+	github.com/gin-gonic/gin v1.7.7
+	github.com/go-playground/universal-translator v0.18.0 // indirect i18n
+	github.com/go-playground/validator/v10 v10.11.0 // gin validator
+	github.com/natefinch/lumberjack v2.0.0+incompatible
+	github.com/spf13/viper v1.12.0 // indirect 解析配置文件 写滚动日志
 	github.com/ugorji/go v1.2.6 // indirect
-	golang.org/x/crypto v0.0.0-20220214200702-86341886e292 // indirect
-	golang.org/x/sys v0.0.0-20220224120231-95c6836cb0e7 // indirect
-	golang.org/x/text v0.3.7 // indirect
-	google.golang.org/protobuf v1.27.1 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
+	go.uber.org/zap v1.21.0 // indirect 提供结构化日志
+	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
+	gorm.io/driver/mysql v1.3.4
+	gorm.io/gorm v1.23.6
+	moul.io/zapgorm2 v1.1.3 // indirect  😄 zapgorm2 is a zap logging driver for gorm v2
 )

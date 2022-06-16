@@ -1,0 +1,45 @@
+2022/06/16 16:40:17.370 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]
+2022/06/16 16:40:17.371 |	[34mINFO[0m	|	person/person.go:25	|	No more person record, row count=0
+2022/06/16 16:40:18.355 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]
+2022/06/16 16:40:18.360 |	[34mINFO[0m	|	person/person.go:25	|	No more person record, row count=0
+2022/06/16 16:40:19.088 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]
+2022/06/16 16:40:19.088 |	[34mINFO[0m	|	person/person.go:25	|	No more person record, row count=0
+2022/06/16 16:41:27.218 |	[35mDEBUG[0m	|	person/person.go:39	|	Create personDao [lynn] type [init] cronExpress [%!s(MISSING)]
+2022/06/16 16:41:27.225 |	[34mINFO[0m	|	person/person.go:54	|	Insert new person id: 1
+2022/06/16 16:42:25.295 |	[35mDEBUG[0m	|	person/person.go:39	|	Create personDao [lynn] type [nil] cronExpress [%!s(MISSING)]
+2022/06/16 16:42:25.301 |	[31mERROR[0m	|	person/person.go:48	|	trace	{"error": "Error 1062: Duplicate entry 'lynn' for key 'idx_people_name'", "elapsed": 0.005461014, "rows": 0, "sql": "INSERT INTO `people` (`name`,`description`,`created_time`,`updated_time`) VALUES ('lynn','nil','2022-06-16 16:42:25.296','2022-06-16 16:42:25.296')"}
+2022/06/16 16:42:25.301 |	[31mERROR[0m	|	person/person.go:49	|	Insert new person failed: Error 1062: Duplicate entry 'lynn' for key 'idx_people_name'
+2022/06/16 16:42:25.302 |	[31mERROR[0m	|	person/person.go:60	|	Commint create person transcation err: Error 1062: Duplicate entry 'lynn' for key 'idx_people_name'
+2022/06/16 17:30:07.067 |	[35mDEBUG[0m	|	person/person.go:67	|	Update personDao [lynn] Description [nil]
+2022/06/16 17:45:54.366 |	[35mDEBUG[0m	|	person/person.go:67	|	Update personDao [lynn] Description [nil]
+2022/06/16 17:46:07.743 |	[35mDEBUG[0m	|	person/person.go:67	|	Update personDao [lynn] Description [modify test]
+2022/06/16 17:55:10.816 |	[34mINFO[0m	|	person/person.go:91	|	Delete person [2]
+2022/06/16 17:55:10.817 |	[33mWARN[0m	|	person/person.go:98	|	Not find target person [2]
+2022/06/16 17:55:15.991 |	[34mINFO[0m	|	person/person.go:91	|	Delete person [1]
+2022/06/16 17:57:23.562 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]
+2022/06/16 17:57:23.563 |	[34mINFO[0m	|	person/person.go:25	|	No more person record, row count=0
+2022/06/16 17:57:24.301 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]
+2022/06/16 17:57:24.301 |	[34mINFO[0m	|	person/person.go:25	|	No more person record, row count=0
+2022/06/16 17:57:27.151 |	[35mDEBUG[0m	|	person/person.go:39	|	Create personDao [lynn] type [init] cronExpress [%!s(MISSING)]
+2022/06/16 17:57:27.152 |	[34mINFO[0m	|	person/person.go:54	|	Insert new person id: 3
+2022/06/16 17:57:31.309 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]
+2022/06/16 17:57:32.366 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]
+2022/06/16 17:57:32.908 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]
+2022/06/16 17:57:33.345 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]
+2022/06/16 18:00:01.675 |	[33mWARN[0m	|	migrator/migrator.go:52	|	trace	{"elapsed": 0.146106064, "rows": 0, "sql": "ALTER TABLE `people` MODIFY COLUMN `name` varchar(100) NOT NULL"}
+2022/06/16 18:00:26.134 |	[35mDEBUG[0m	|	person/person.go:67	|	Update personDao [lynn] Description [modify test]
+2022/06/16 18:00:35.102 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]
+2022/06/16 18:00:35.872 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]
+2022/06/16 18:00:36.510 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]
+2022/06/16 18:00:37.030 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]
+2022/06/16 18:00:37.379 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]
+2022/06/16 18:02:06.907 |	[35mDEBUG[0m	|	person/person.go:67	|	Update personDao [test] Description [modify test]
+2022/06/16 18:02:11.111 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]
+2022/06/16 18:02:11.695 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]
+2022/06/16 18:02:12.006 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]
+2022/06/16 18:02:12.605 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]
+2022/06/16 18:02:13.189 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]
+2022/06/16 18:03:09.159 |	[35mDEBUG[0m	|	person/person.go:67	|	Update personDao [test] Description [modify test]
+2022/06/16 18:03:14.002 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]
+2022/06/16 18:03:14.931 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]
+2022/06/16 18:03:15.475 |	[35mDEBUG[0m	|	person/person.go:18	|	Query person list param: page=1, pageSize=10, condition=map[]

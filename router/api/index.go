@@ -1,7 +1,7 @@
 package api
 
 import (
-	"gin_prac/router/api/userRouter"
+	"github.com/LynnWonder/gin_prac/router/api/userRouter"
 	"github.com/gin-gonic/gin"
 )
 

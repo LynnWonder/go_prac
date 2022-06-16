@@ -1,7 +1,7 @@
 package router
 
 import (
-	"gin_prac/router/api"
+	"github.com/LynnWonder/gin_prac/router/api"
 	"github.com/gin-gonic/gin"
 )
 
