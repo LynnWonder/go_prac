@@ -24,6 +24,7 @@
 │   │       └── person.go
 │   ├── model
 │   │   └── person.go
+│   ├── middleware
 │   └── service
 │       └── person
 │           ├── errors.go

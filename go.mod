@@ -3,6 +3,7 @@ module github.com/LynnWonder/gin_prac
 go 1.16
 
 require (
+	github.com/gin-contrib/zap v0.0.2
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-playground/universal-translator v0.18.0 // indirect i18n
 	github.com/go-playground/validator/v10 v10.11.0 // gin validator

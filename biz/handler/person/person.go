@@ -38,6 +38,7 @@ type ListQueryRequest struct {
 	PageSize int `form:"pageSize"`
 }
 
+// handler 函数传入的是 gin.Context 指针
 func ListAll(c *gin.Context) {
 	var q ListAllRequest
 	// 验证请求参数
