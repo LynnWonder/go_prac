@@ -1,6 +1,7 @@
 package main
 
 import "fmt"
+import "github.com/LynnWonder/go_prac/myself"
 
 /**
 函数类型的字面量由关键字func、由圆括号包裹参数声明列表、空格以及可以由圆括号包裹的结果声明列表组成。
@@ -71,5 +72,9 @@ func main () {
 	fmt.Println("=== res is ===>", res)
 	// TIP 结合 defer 函数之后的执行顺序：z=z+200 -> call defer -> return
 	println("=== 结合 defer===>",addD(1,2))
+
+	// init 函数总是早于 main 函数执行
+	var test = myself.Test
+	println("===myself.test===", test)
 }
 
