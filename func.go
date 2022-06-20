@@ -45,8 +45,31 @@ func summary (n ...int) int{
 	}
 	return res
 }
+
+func add (x,y int) (s int) {
+	s = x  + y
+	// 如果函数体内没有重新命名 s 那么直接像下面这样隐式返回就可以
+	return
+}
+
+// 和 defer 结合
+func addD(x, y int)(z int) {
+	defer func() {
+		println(z)
+	}()
+	z = x + y
+	return z+200
+}
+
+
 func main () {
 	fmt.Print(result)
 	fmt.Println("===计算和==>", summary(1,2,3), summary(0,1))
+	// tip 注意使用 slice 对象做变参的时候，必须展开
+	sl := []int{1,3,4}
+	res := summary(sl...)
+	fmt.Println("=== res is ===>", res)
+	// TIP 结合 defer 函数之后的执行顺序：z=z+200 -> call defer -> return
+	println("=== 结合 defer===>",addD(1,2))
 }
 
