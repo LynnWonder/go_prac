@@ -11,7 +11,7 @@
 │   ├── common
 │   │   └── global.go
 │   ├── config
-│   │   ├── config.go
+│   │   ├── config.go 注册 logger，解析配置文件到 AppConfig 中
 │   │   └── logger.go
 │   ├── dal
 │   │   ├── gorm.go
@@ -69,11 +69,9 @@ go run main.go
 ```
 
 ## 一些问题
-
-- 为什么还要使用 github.com/natefinch/lumberjack 写滚动日志
-- gin 是在 net/http 基础上进行了一些封装？'
-
+- gin 是在 net/http 基础上进行了一些封装？
 - handler chain 的概念
 
-## TODO 
-梳理上述的问题，添加中间件
+## reference
+[Gorm docs](https://gorm.io/zh_CN/docs)
+

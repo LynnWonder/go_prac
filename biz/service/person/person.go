@@ -16,6 +16,7 @@ var log = common.SugaredLogger
 // @return [persons, row count, error]
 func ListPersons(page, pageSize int, condition map[string]interface{}) ([]*model.Person, int64, error) {
 	log.Debugf("Query person list param: page=%d, pageSize=%d, condition=%v", page, pageSize, condition)
+	// 进入领域层请求数据
 	rowCount, err := personDao.CountPersons(condition)
 	if err != nil {
 		log.Errorf("Query person count error: %v", err)

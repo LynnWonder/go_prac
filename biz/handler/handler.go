@@ -12,8 +12,11 @@ var ValiObj *validator.Validate
 // Parse query with Application/json
 func QueryValidate(r interface{}, c *gin.Context) *Custom_error {
 	if err := c.Bind(r); err != nil {
+		//  Gin’s validator will return validator.ValidationErrors if a validation error occurs,
+		//  basically it will just send back the error it encountered.
 		errs, ok := err.(validator.ValidationErrors)
 		rawError := ErrHandlerQueryFail
+		// so we do a type assertion here
 		if !ok {
 			rawError.Msg = err.Error()
 			return rawError

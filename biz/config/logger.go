@@ -11,6 +11,7 @@ import (
 	"time"
 )
 
+// 初始化 Logger 并配置好写日志至文件中
 func initLogger() {
 	// log file
 	if err := os.MkdirAll(AppConfig.Log.LogDir, 0755); err != nil {
@@ -24,6 +25,7 @@ func initLogger() {
 	if err != nil {
 		panic(fmt.Errorf("parse log level error, format %s", AppConfig.Log.Level))
 	}
+	// zap 不支持日志文件归档，因此结合 lumberjack 一起使用
 	multiWriteSyncer := zapcore.NewMultiWriteSyncer(getLogWriter(logFileName), os.Stdout)
 	common.Logger = zap.New(zapcore.NewCore(getEncoder(), multiWriteSyncer, logLevel), zap.AddCaller())
 	zap.ReplaceGlobals(common.Logger)
@@ -55,6 +57,7 @@ func getEncoder() zapcore.Encoder {
 		EncodeDuration: zapcore.SecondsDurationEncoder,
 	}
 
+	// 编码器设置
 	return zapcore.NewConsoleEncoder(encoderConfig)
 }
 
@@ -65,5 +68,6 @@ func getLogWriter(filename string) zapcore.WriteSyncer {
 		MaxBackups: 7,
 		MaxAge:     7,
 	}
+	// 打印到控制台和文件
 	return zapcore.AddSync(lumberJackLogger)
 }

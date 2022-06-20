@@ -41,7 +41,7 @@ type ListQueryRequest struct {
 // handler 函数传入的是 gin.Context 指针
 func ListAll(c *gin.Context) {
 	var q ListAllRequest
-	// 验证请求参数
+	// 验证请求参数，这里统一包装了一个外部包可以访问的 QueryValidate 方法
 	if err := handler.QueryValidate(&q, c); err != nil {
 		c.JSON(err.HTTPCode, err.ToMap())
 		return
@@ -56,6 +56,7 @@ func ListAll(c *gin.Context) {
 			acc[k] = v
 		}
 	}
+	// 进入到 service
 	persons, count, err := person.ListPersons(q.Page, q.PageSize, acc)
 
 	if err != nil {

@@ -17,6 +17,7 @@ var table = map[error]*Custom_error{
 }
 
 func (ce *Custom_error) ToMap() map[string]interface{} {
+	// out 是一个键为 string 类型，值为任意类型的字典
 	out := map[string]interface{}{"message": ce.Msg, "code": ce.Code}
 	if ce.Extra != nil {
 		out["extra"] = ce.Extra

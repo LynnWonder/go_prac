@@ -37,6 +37,7 @@ func ListPersons(page, pageSize int, condition map[string]interface{}) ([]*model
 
 	var persons []*model.Person
 	offset := (page - 1) * pageSize
+	// 这里的使用方法注意一下，结果值是第一个入参，函数返回会包含是否失败的信息
 	result := querySession.Offset(offset).Limit(pageSize).Find(&persons)
 
 	return persons, result.Error
@@ -44,6 +45,7 @@ func ListPersons(page, pageSize int, condition map[string]interface{}) ([]*model
 
 func CountPersons(condition map[string]interface{}) (int64, error) {
 	var querySession = dal.DBConnection.Model(&model.Person{})
+	// 直接给挂上查询条件
 	queryPersonCondition(querySession, condition)
 
 	var count int64
