@@ -1,5 +1,7 @@
 # gin_practices
 > 一个简单的增删改查 gin 项目
+> 
+> gin 处理 http 请求和 tcp 连接的模块实际上是 golang 的 net/http 模块，gin 实则是丰富了 net/http 做路由匹配部分的能力以及其他一些能力。
 ## 项目目录结构
 
 > 在 golang 中，每一个目录即是一个包，每个包都是一等公民，因此不会出现像其他语言一样的 src 目录。
@@ -68,10 +70,10 @@ go run main.go
 // 127.0.0.1:8080/api/user-auth/login
 ```
 
-## 一些问题
-- gin 是在 net/http 基础上进行了一些封装？
+## TODO
 - handler chain 的概念
 
 ## reference
 [Gorm docs](https://gorm.io/zh_CN/docs)
+[gin 源码阅读(1) - gin 与 net/http 的关系](https://www.cnblogs.com/457220157-FTD/p/15331188.html)
 
