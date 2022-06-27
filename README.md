@@ -61,7 +61,7 @@
 ## 项目启动
 配置 goland 启动
 
-项目使用了 kitex(RPC 框架)，其底层实现了 Serialization 序列化和 Transport 传输。
+项目使用了 [kitex](https://www.cloudwego.io/zh/docs/kitex/overview/) (RPC 框架)，其底层实现了 Serialization 序列化和 Transport 传输。
 具体看 rpc 路由，需提前启动服务端应用，参考 rpc/README.md 
 背景知识：
 - kitex 框架和命令行工具默认支持 thrift 和 proto3 两种 IDL，对应的 kitex 支持 thrift 和 protobuf 两种序列化协议。 
