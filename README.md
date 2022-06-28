@@ -51,12 +51,14 @@
 ```
 1. conf 文件夹存基础配置文件
 2. biz 文件夹，业务逻辑的组装层，类似于 DDD 的 domain 层
-   - biz/common 存放常量和全局变量
-   - biz/config 解析 yaml 文件、初始化日志收集等
-3. biz/dal 文件夹，编写数据访问层
-4. 注册路由 router.go
-5. biz/handler handler 函数
-6. biz/service 文件夹，类似于 DDD 的 application 层，实现从 handler 向 dal 的过渡
+   - biz/common 存放常量和全局变量，也可以命名为 constant
+   - biz/config 解析 yaml 文件、初始化日志收集等 
+   - biz/dal 文件夹，编写数据访问层
+   - biz/handler handler 函数
+   - biz/middleware 有必要的时候添加中间件
+   - biz/model 定义数据模型
+   - biz/service 文件夹，类似于 DDD 的 application 层，实现从 handler 向 dal 的过渡
+3. 注册路由 router.go
 
 ## 项目启动
 配置 goland 启动
@@ -69,7 +71,12 @@
 - 在传输上 kitex 使用扩展的 thrift 作为底层传输协议（thrift 既是 IDL 格式也是序列化协议和传输协议）
 
 注：
-IDL 即 interface definition Language 为接口定义语言，是用来约定进行 rpc 的双方的语言。
+- golang 项目结构参考 [Standard Go Project Layout](https://github.com/golang-standards/project-layout/blob/master/README_zh.md),
+  这个结构虽然有些比较老了比如 vendor 文件夹，但它也给了我们一些提示。
+- IDL 即 interface definition Language 为接口定义语言，是用来约定进行 rpc 的双方的语言。
+- vendor 文件夹还是早期的管理依赖的方式，目前默认使用 go module，如果遇到使用 vendor 文件夹的也不必太在意
+
+启动方式如下：
 
 ![img.png](img.png)
 
