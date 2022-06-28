@@ -71,10 +71,24 @@ func main () {
 	res := summary(sl...)
 	fmt.Println("=== res is ===>", res)
 	// TIP 结合 defer 函数之后的执行顺序：z=z+200 -> call defer -> return
-	println("=== 结合 defer===>",addD(1,2))
+	fmt.Println("=== 结合 defer===>",addD(1,2))
 
 	// init 函数总是早于 main 函数执行
 	var test = myself.Test
-	println("===myself.test===", test)
+	fmt.Println("===myself.test===", test)
+
+	// Tip 关于 array 类型的值作为函数参数，如果想改变数组的值必须传的是数组的指针类型
+	xArr := [3]int{1,2,3}
+	xSlice := []int{1,2,3}
+
+	func(arr *[3]int) {
+		(*arr)[0] = 27
+	}(&xArr)
+	// 或者通过直接使用 slice，函数内部得到的虽然是 slice 的值拷贝，但依旧会更新 slice 的原始数据
+	func(arr []int) {
+		arr[0] = 7
+	}(xSlice)
+	fmt.Println("=====>xArr", xArr)
+	fmt.Println("=====>xSlice", xSlice)
 }
 

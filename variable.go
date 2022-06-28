@@ -3,12 +3,14 @@ package main
 import "fmt"
 
 func main() {
-	// 简单类型
+	// 这是标准声明
 	var a int8 = 10
 	var b float32 = 12.2
 	var c1 byte = 'a'
 	var msg = "Hello World"
+	// TIP 这是简短声明，注意简短声明只能在函数内部使用
 	ok := false
+	ok = true
 
 	fmt.Println("this is a", a)
     fmt.Println("this is b", b)

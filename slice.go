@@ -14,6 +14,9 @@ func main() {
 	} else {
 		fmt.Println("不是空")
 	}
+	// 切片追加值
+	s1 = append(s1, 2)
+	fmt.Println("=====>s1",s1)
 
 	// 2.:=
 	s2 := []int{}
