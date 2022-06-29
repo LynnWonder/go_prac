@@ -80,6 +80,20 @@ func main() {
 	cc := bb[0:3]
 	fmt.Printf("slice cc : %v , len(cc) : %v\n", cc, len(cc))
 
+	// slice 和 array 其实都是一维数组，golang 并不支持多维数组
+	// 只能通过创建动态的多维数组来实现
+	xx :=2
+	yy :=4
+
+	table :=make([][]int,xx)
+	for i := range table {
+		table[i] = make([]int, yy)
+	}
+	table[0][0]=1
+	// 如果不赋初值则会默认都是零值
+	fmt.Println("=====>table", table)
+
+
 	// 字符串和切片 string 底层是一个 byte 的数组
 	strr := "hello world"
 	// 含有中文字符的字符串则使用 []rune(strr)
@@ -87,6 +101,4 @@ func main() {
 	ss[6] = 'Z'
 	ss = append(ss, '!')
 	fmt.Println("=====>变化后的字符串", string(ss))
-
-
 }

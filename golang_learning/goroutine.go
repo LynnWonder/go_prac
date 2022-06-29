@@ -12,10 +12,11 @@ import (
 
 var wg sync.WaitGroup
 
-// 例如我们希望并发下载 N 个资源，多个并发协程之间不需要通信，那么就可以使用 sync.WaitGroup，等待所有并发协程执行结束。
+// TIP 例如我们希望并发下载 N 个资源，多个并发协程之间不需要通信，默认情况下程序不等所有 goroutine 都执行完才退出，
+//  因此我们得使用 sync.WaitGroup，等待所有并发协程执行结束。
 func download(url string) {
 	fmt.Println("start to download", url)
-	time.Sleep(time.Second*2)
+	time.Sleep(time.Second*5)
 	// 减去一个计数
 	wg.Done()
 }

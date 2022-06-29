@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 )
 
 // 本节讲解 Unmarshal
@@ -12,7 +13,7 @@ type StuRead struct {
 	Age   interface{}
 	HIgh  interface{}
 	sex   interface{}
-	Class interface{} `json:"class"`
+	Class map[string]interface{} `json:"class"`
 	// tip
 	//  如果我们想让 Class 这种"复合数据"（可能会进行二次甚至更多次 json 解析的）
 	//  必须明确类型，否则会被转化成 map[string]interface{}
@@ -30,7 +31,7 @@ type Class1 struct {
 func main() {
 	//json字符中的"引号，需用\进行转义，否则编译出错
 	//json字符串沿用上面的结果，但对key进行了大小的修改，并添加了sex数据
-	data:="{\"name\":\"张三\",\"Age\":18,\"high\":true,\"sex\":\"男\",\"CLASS\":{\"naME\":\"1班\",\"GradE\":3}}"
+	data:="{\"name\":\"张三\",\"Age\":18,\"high\":true,\"sex\":\"男\",\"class\":{\"naME\":\"1班\",\"GradE\":3}}"
 	str:=[]byte(data)
 
 	//1.Unmarshal的第一个参数是json字符串，第二个参数是接受json解析的数据结构。
@@ -56,5 +57,17 @@ func main() {
 
 	// 打印出来的值：{张三 18 true <nil> map[GradE:3 naME:1班] <nil>}
 	fmt.Println(stu)
-	//fmt.Println(stu, stu.Class.Name)
+	fmt.Println(stu.Class,stu.Class["naME"])
+
+	var data0 = []byte(`{"status": 200}`)
+	var result map[string]interface{}
+
+	if err := json.Unmarshal(data0, &result); err != nil {
+		log.Fatalln(err)
+	}
+
+	// 在 encode/decode JSON 数据时，Go 默认会将数值当做 float64
+	fmt.Printf("%T\n", result["status"])    // float64
+	var status = result["status"]
+	fmt.Println("Status value: ", status)
 }

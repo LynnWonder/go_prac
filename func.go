@@ -1,7 +1,7 @@
 package main
 
 import "fmt"
-import "github.com/LynnWonder/go_prac/myself"
+import "github.com/LynnWonder/go_grammar_prac/myself"
 
 /**
 函数类型的字面量由关键字func、由圆括号包裹参数声明列表、空格以及可以由圆括号包裹的结果声明列表组成。

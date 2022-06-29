@@ -1,4 +1,4 @@
-module github.com/LynnWonder/go_prac
+module github.com/LynnWonder/go_grammar_prac
 
 go 1.16
 

@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"reflect"
+	"unicode/utf8"
 )
 func main() {
 	/**
@@ -30,14 +31,23 @@ func main() {
 	fmt.Println("=== TypeOf runeArr is ===", reflect.TypeOf(runeArr[2]).Kind()) // int32
 	fmt.Println(runeArr[2], string(runeArr[2]))    // 35821 语
 	fmt.Println("len(runeArr)：", len(runeArr))    // len(runeArr)： 4
+	// 使用 len 拿到的有时候不是我们预期的字符串长度，此时可以使用 utf8.RuneCountInString，注意一些特殊字符还是可能会占有两个 rune
+	fmt.Println("utf8.RuneCountInString===>", utf8.RuneCountInString(str2))
 	mode := flag.String("mode", "http", "请填写服务的运行模式http|cron")
 	// 可以得出结论是解指针后如果不输入默认就是 http
 	fmt.Println("=====>", *mode)
 
-	// TIP 修改字符串
+
+	// range 迭代字符串中的值
+	for _,v := range []rune(str1) {
+		fmt.Println("======>str1 中的值", string(v))
+	}
+
+
+	// TIP 直接用字符串的索引来修改是不允许的，若要修改字符串必须将其转化为 []byte 或 []rune 后
 	s1 := "hello"
 	runeS1 := []rune(s1)
-	runeS1[0] = '狗'
+	runeS1[0] = 'g'
 	fmt.Println("===转换后的数据是===", string(runeS1), s1)
 
 

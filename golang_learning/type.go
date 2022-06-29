@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"reflect"
+	"strconv"
 )
 /**
  * 关于类型转换 https://juejin.cn/post/6844904113914789902
@@ -22,6 +23,10 @@ func  main()  {
 	fmt.Println(s, ok)
 	fmt.Println(z)
 	fmt.Println(s, reflect.TypeOf(s))
+	// tip 将数字转换成字符串类型：只能使用 strconv.Itoa(x)  或者对于 int64 类型的数字用 strconv.FormatInt(x,base)
+	//  实际前者就是 strconv.FormatInt(i,10) 的简写
+	intt := 12345
+	fmt.Println("=====>strconv.Itoa", strconv.Itoa(intt), reflect.TypeOf(strconv.Itoa(intt)))
 	justifyType(nil)
 	justifyType("I'm Garfield")
 	justifyType(44)

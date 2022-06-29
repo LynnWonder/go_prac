@@ -20,11 +20,10 @@ func main()  {
 	//  即：对于字典值来说，如果其中不存在索引表达式欲取出的键值对，
 	//  那么就以它的值类型的空值（或称默认值）作为该索引表达式的求值结果。
 	//  由于字符串类型的空值为""，所以mm[d]的求值结果即为""。
-	//  这样就比较坑啊
 	fmt.Printf("d: %v，e: %v\n", d,e)
 
 
-	// 判断某个键是否存在
+	// TIP golang 中用以判断 map 中某个键是否存在的方式
 	e, ok:= mm["e"]
 	// 针对字典的索引表达式可以有两个求值结果。
 	// 第二个求值结果是bool类型的。
@@ -33,7 +32,7 @@ func main()  {
 
 
 	// map 的遍历
-	// tip 遍历 map 时的元素顺序与添加键值对的顺序无关
+	// tip 遍历 map 时的元素顺序与添加键值对的顺序无关，也就是乱序的
 	for k := range mm {
 		fmt.Println("====遍历显示 mm 的 key:", k)
 	}
@@ -81,7 +80,6 @@ func main()  {
 	actions["3"] = "test3"
 
 	// if 语句可以持初始化语句
-	// tip 感觉这里可以用来判断某个元素是否存在
 	if action, ok := actions["4"]; ok {
 		fmt.Println("===action===>", action, ok)
 	} else {

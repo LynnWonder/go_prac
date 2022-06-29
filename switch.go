@@ -19,6 +19,8 @@ func switch2 () {
 	case "Golang":
 		fmt.Println("=====>")
 		fmt.Println("A programming language from Google.")
+		// fallthrough 用来强制执行下一个 case 代码块，注意判断类型的时候不能用（如下面的函数）
+		fallthrough
 	case "Rust":
 		fmt.Println("=====>")
 		fmt.Println("A programming language from Mozilla.")
@@ -45,7 +47,6 @@ func switch3()  {
 	default:
 		fmt.Println("Unknown!")
 	}
-
 }
 
 func main () {
