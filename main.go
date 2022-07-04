@@ -50,6 +50,7 @@ func main() {
 	//   - stack means whether output the stack info.
 	router.Use(ginZap.RecoveryWithZap(zap.L(), true))
 
+	// 注册路由
 	register(router)
 	// defer 函数在 return 之前执行
 	defer func() {

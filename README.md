@@ -60,6 +60,7 @@
    - biz/service 文件夹，类似于 DDD 的 application 层，实现从 handler 向 dal 的过渡
 3. 注册路由 router.go
 
+一个 http 请求的工作链：router==>handler(validate)==>service==>dal
 ## 项目启动
 配置 goland 启动
 
