@@ -73,7 +73,7 @@
 
 注：
 - golang 项目结构参考 [Standard Go Project Layout](https://github.com/golang-standards/project-layout/blob/master/README_zh.md),
-  这个结构虽然有些比较老了比如 vendor 文件夹，但它也给了我们一些提示。
+  这个结构虽然有些比较老了比如 vendor 文件夹，但它也给了我们一些提示。其他可参考的项目结构[Go工程目录](https://blog.csdn.net/hezhanran/article/details/122056826)
 - IDL 即 interface definition Language 为接口定义语言，是用来约定进行 rpc 的双方的语言。
 - vendor 文件夹还是早期的管理依赖的方式，目前默认使用 go module，如果遇到使用 vendor 文件夹的也不必太在意
 
