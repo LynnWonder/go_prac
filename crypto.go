@@ -33,9 +33,13 @@ func Signature(accessKeySecret, method, uri, body string) string {
 	return hex.EncodeToString(h.Sum(nil))
 }
 
+type Foo struct {
+	Number int    `json:"number"`
+	Title  string `json:"title"`
+}
+
 func main() {
-	test := "test"
-	fmt.Println(Signature("WXpCbE5Ua3pObUV5TmpReU5HRTFabUZqTUdZNFpUQmxObUUzWVRrMk1HTQ==", "POST", "api/v1/cloudenv/account", test))
-	print(ValidHmacSignature("WXpCbE5Ua3pObUV5TmpReU5HRTFabUZqTUdZNFpUQmxObUUzWVRrMk1HTQ==",
-		"e335361fa1a6adda7ecb86160a8346f04c57194e225361286d7ae3cb59080b22", sha256.New, "POST", "api/v1/cloudenv/account", test))
+	fmt.Println(Signature("xx", "POST", "/api/v1/test", "test"))
+	print(ValidHmacSignature("xx",
+		"c2322ce78f8e016ad696cfe287058776ec7271bb7643876e05374ad85c8e0740", sha256.New, "POST", "/api/v1/test", "test"))
 }
