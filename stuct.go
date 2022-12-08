@@ -10,20 +10,28 @@ tip
  使用 new 函数对新的结构体变量分配内存，返回的是一个指向已分配内存的指针
 */
 
-
-
 /**
 tip
  与代表函数值的字面量类似，我们在编写一个结构体值的字面量时不需要先拟好其类型。
  这样的结构体字面量被称为匿名结构体。与匿名函数类似，我们在编写匿名结构体的时候需要先写明其类型特征（包含若干字段声明），再写出它的值初始化部分。
  下面，我们依照结构体类型Person创建一个匿名结构体：
- */
+*/
 type Personn struct {
 	Name   string
 	Gender string
 	Age    uint8
 }
 
+// 嵌套结构体
+type Ultrmann1 struct {
+	Personn
+	Type string
+}
+
+type Ultrmann2 struct {
+	*Personn
+	Type string
+}
 
 // tip
 //  可以认为在 golang 中，结构体就是类的一种简化形式，那么它的方法其实是一种特殊类型的函数，它是作用在接收者上的一个函数，接收者几乎可以是任何类型
@@ -44,7 +52,6 @@ func main() {
 	//这样的结构体字面量被称为匿名结构体。与匿名函数类似，我们在编写匿名结构体的时候需要先写明其类型特征（包含若干字段声明），再写出它的值初始化部分。
 	//下面，我们依照结构体类型Person创建一个匿名结构体，与此同时匿名结构体是不能有方法的
 
-
 	// 熟悉面向对象编程的同学可能已经意识到，包含若干字段和方法的结构体类型就相当于一个把属性和操作封装在一起的对象。
 	// 不过要注意，与对象不同的是，结构体类型（以及任何类型）之间都不可能存在继承关系。
 	// 实际上，在Go语言中并没有继承的概念。不过，我们可以通过在结构体类型的声明中添加匿名字段（或称嵌入类型）来模仿继承
@@ -60,14 +67,26 @@ func main() {
 	//p.Gender = "Male"
 	//p.Age = 10
 	// 这里和使用 new 一样的效果，返回的都是一个指针
-	p :=&Personn{
+	p := &Personn{
 		"Tom",
 		"female",
 		1,
 	}
 	fmt.Printf("value of p: %v\n", p)
-	fmt.Printf("value of p: %s,%s\n", p.Name,p.Gender)
-	q :=Personn{"Tom", "Male", 30}
+	fmt.Printf("value of p: %s,%s\n", p.Name, p.Gender)
+	q := Personn{"Tom", "Male", 30}
 	q.Grow()
 	fmt.Printf("value of q: %v\n", q)
+	ultra1 := &Ultrmann1{}
+	ultra1.Name = "a"
+	ultra1.Type = "test"
+	fmt.Println(ultra1)
+
+	// 嵌套的事指针类型时就不能直接赋值了
+	ultra2 := &Ultrmann2{}
+	ultra2.Personn = &Personn{
+		Name: "a",
+	}
+	ultra2.Type = "test"
+	fmt.Println(ultra2)
 }
