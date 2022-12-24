@@ -39,13 +39,6 @@
 ├── logs
 │   └── gin-prac.log
 ├── main.go
-├── router   初次练习时用的路由，无需注意
-│   ├── api
-│   │   ├── index.go
-│   │   └── userRouter
-│   │       ├── auth.go
-│   │       └── index.go
-│   └── router.go
 └── router.go    
     
 ```
@@ -89,7 +82,6 @@ go run main.go
 ```
 
 ## TODO
-- handler chain 的概念
 
 ## reference
 [Gorm docs](https://gorm.io/zh_CN/docs)
