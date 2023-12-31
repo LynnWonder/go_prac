@@ -5,17 +5,19 @@ import (
 	"reflect"
 	"strconv"
 )
+
 /**
  * 关于类型转换 https://juejin.cn/post/6844904113914789902
  * http://www.randyfield.cn/post/2021-05-26-go-type-conversion/
  */
-func  main()  {
+func main() {
+	// TIP 字符串相关的类型转换都是通过 strconv 包实现的
 	// Go 语言只有强制类型转换，语法是 T(表达式) 仅支持两个类型可以相互转换的时候使用，没有隐式类型转换
 	// tip ① golang 中空接口可以存储任意类型的值，因此可以使用空接口来进行数据转换
 	var a interface{} = 257
 	var b interface{} = "zz"
 
-	s,ok := a.(int64)
+	s, ok := a.(int64)
 	z := b.(string)
 	// tip ② unsafe 强制类型转换，暂时不学习
 	//var f float64
@@ -34,8 +36,6 @@ func  main()  {
 	justifyType(true)
 	justifyType(int32(1105020))
 }
-
-
 
 // ① switch:变量 x 断言成了 type 类型，type 类型具体值就是 switch case 的值，如果 x 成功断言成了某个 case 类型，就可以执行那个 case，此时 i := x.(type) 返回的 i 就是那个类型的变量了，可以直接当作 case 类型使用。
 func justifyType(x interface{}) {

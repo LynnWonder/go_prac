@@ -7,17 +7,18 @@ import (
 )
 
 // tip
-//  可导出成员：首字母大写的变量
+//
+//	可导出成员：首字母大写的变量
 type Stu struct {
-	Name string `json:"name"`
-	Age int
+	Name   string `json:"name"`
+	Age    int
 	Gender bool
-	sex string // sex 不是一个可导出成员
-	Class *Class `json:"class"`
+	sex    string // sex 不是一个可导出成员
+	Class  *Class `json:"class"`
 }
 
 type Class struct {
-	Name string
+	Name  string
 	Grade int
 }
 
@@ -28,11 +29,11 @@ func main() {
 	//stu.Age = 1
 	//stu.Gender = True
 	// 此时，返回的是值
-	stu := Stu {
-		Name: "Jerry",
-		Age:1,
+	stu := Stu{
+		Name:   "Jerry",
+		Age:    1,
 		Gender: true,
-		sex: "female",
+		sex:    "female",
 	}
 	cla := new(Class)
 	cla.Name = "test"
@@ -50,7 +51,7 @@ func main() {
 	//  指针变量，编码时自动转换为它所指向的值，如cla变量。
 	// （当然，不传指针，Stu struct的成员Class如果换成Class struct类型，效果也是一模一样的。
 	//  只不过指针更快，且能节省内存空间。）
-	jsonStu,err := json.Marshal(stu)
+	jsonStu, err := json.Marshal(&stu)
 	if err != nil {
 		fmt.Println("stu 生成 json 字符串错误")
 	}
